@@ -150,10 +150,10 @@ def titleAd(ad, main_img=None, sub_img=None, head=None, desc=None, title=None, u
           "type": "TileAd"
         }
 
-def featureRot(ad, main_img=None):
+def featureRot(ad,acc_text = None, main_img=None,url=None, logo_img=None ):
     return {
       "__type": "ReturnedFeaturedRotatorAd:http://internal.amazon.com/coral/com.amazon.dadetaviary/",
-      "accessibilityText": "Accessibility Text",
+      "accessibilityText": "Accessibility Text" if acc_text is None else acc_text,
       "adId": str(int(random.random()*500000000000)),
       "adRole": ad["adRole"],
       "adVersion": str(int(time.time())),
@@ -168,11 +168,11 @@ def featureRot(ad, main_img=None):
       },
       "clickTrackingUrl": "",
       "creativeId": str(int(random.random()*500000000000)),
-      "imageUrl": "https://m.media-amazon.com/images/I/81bXhP91J1L.jpg",
+      "imageUrl": "invalid.jpg" if main_img is None else main_img,
       "impressionUrl": "",
       "instrPixelUrl": None,
-      "intentUrl": "amzn://com.amazon.tv.subscription/offer?refMarker=ktb_3p_nog_c&benefitTypeId=hbomaxus&sourceTag=LAUNCHER_MOVIES_FR_3",
-      "logoUrl": "https://m.media-amazon.com/images/I/31PcgTO-P1L.png",
+      "intentUrl": "" if url is None else url,
+      "logoUrl": "invalid.jpg" if logo_img is None else logo_img,
       "placementName": ad["placementName"],
       "ttlMinutes": "1",
       "type": "FeaturedRotatorAd",
@@ -224,6 +224,11 @@ def response(flow: http.HTTPFlow) -> None:
                                 main_img="https://raw.githubusercontent.com/HeronErin/FuckAmz/main/test_imgs/inline_ad.jpg", 
                                 img="https://raw.githubusercontent.com/HeronErin/FuckAmz/main/test_imgs/inine_background.jpg")
                         ads.append(data)
+                    elif ad["placementName"]=="Launcher.Home.FR.1":
+                        ads.append(featureRot(ad,
+                                url="https://www.youtube.com/watch?v=dQw4w9WgXcQ", 
+                                main_img="https://raw.githubusercontent.com/HeronErin/FuckAmz/main/test_imgs/featured_rot_ad.jpg",
+                                logo_img="https://raw.githubusercontent.com/HeronErin/FuckAmz/main/test_imgs/featured_rot_logo.png"))
                     else:
                         ads.append(getNulledAd(ad))
 
