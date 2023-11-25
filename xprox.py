@@ -108,7 +108,7 @@ def inline(ad, acc_text = None, head=None, main_img = None, url=None, desc=None,
         "type": "InlineAd"
     }
 
-def titleAd(ad, main_img=None, sub_img=None, header=None, dec=None, title=None, url=None, acc_text=None):
+def titleAd(ad, main_img=None, sub_img=None, head=None, desc=None, title=None, url=None, acc_text=None):
     return {
           "__type": "ReturnedTileAd:http://internal.amazon.com/coral/com.amazon.dadetaviary/",
           "accessibilityText": "Accessibility Text" if acc_text is None else acc_text,
@@ -126,7 +126,7 @@ def titleAd(ad, main_img=None, sub_img=None, header=None, dec=None, title=None, 
           },
           "clickTrackingUrl": "",
           "creativeId": str(int(random.random()*500000000000)),
-          "header": "" if header is None else header,
+          "header": "" if head is None else head,
           "imageUrl": "invalid.jpg" if main_img is None else main_img,
           "impressionUrl": "",
           "instrPixelUrl": None,
@@ -135,7 +135,7 @@ def titleAd(ad, main_img=None, sub_img=None, header=None, dec=None, title=None, 
           "isDefaultAd": False,
           "miniDetails": {
             "__type": "ReturnedCustomAdMiniDetails:http://internal.amazon.com/coral/com.amazon.dadetaviary/",
-            "description": "" if dec is None else dec,
+            "description": "" if desc is None else desc,
             "headline": "" if title is None else title,
             "imageUrl": "invalid.jpg" if sub_img is None else sub_img,
             "type": None,
@@ -178,8 +178,24 @@ def response(flow: http.HTTPFlow) -> None:
                     ads.append(   getNulledAd(ad)     )
             elif strat == "ReactiveRefreshStrategy":
                 for ad in jso["ads"]:
-                    if ad["placementName"] in ["Launcher.Home.Default.Rotational"]:
-                        data = banner(ad, head="Owo", main_img=None)
+                    if ad["placementName"] in ["Launcher.Home.Default.Rotational", "Gordon.Live.Default.Inline"]:
+                        data = None
+                        if ad["placementName"] == "Launcher.Home.Default.Rotational":
+                            data = titleAd(ad,
+                                head="Owo", 
+                                headline = "Things are happening",
+                                desc = "The Revolution has begun!!!!",
+                                url = "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+                                main_img="https://raw.githubusercontent.com/HeronErin/FuckAmz/main/test_imgs/inline_ad.jpg", 
+                                img="https://raw.githubusercontent.com/HeronErin/FuckAmz/main/test_imgs/inine_background.jpg")
+                        else:
+                            data = inline(ad, 
+                                head="Owo", 
+                                headline = "Things are happening",
+                                desc = "The Revolution has begun!!!!",
+                                url = "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+                                main_img="https://raw.githubusercontent.com/HeronErin/FuckAmz/main/test_imgs/inline_ad.jpg", 
+                                img="https://raw.githubusercontent.com/HeronErin/FuckAmz/main/test_imgs/inine_background.jpg")
                         ads.append(data)
                     else:
                         ads.append(getNulledAd(ad))
