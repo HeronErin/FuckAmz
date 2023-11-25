@@ -150,6 +150,34 @@ def titleAd(ad, main_img=None, sub_img=None, head=None, desc=None, title=None, u
           "type": "TileAd"
         }
 
+def featureRot(ad, main_img=None):
+    return {
+      "__type": "ReturnedFeaturedRotatorAd:http://internal.amazon.com/coral/com.amazon.dadetaviary/",
+      "accessibilityText": "Accessibility Text",
+      "adId": str(int(random.random()*500000000000)),
+      "adRole": ad["adRole"],
+      "adVersion": str(int(time.time())),
+      "additionalAviaryMetadataJsonString": {
+        "ThreePProviders": [],
+        "adRequestId": generate_random_string(len("CwwqA7CDTsesFPg6mjzHmw")),
+        "bidId": generate_random_string(len("5zqhDJeVssvGzPu7F.MxNA")),
+        "creativeVariantConfig": None,
+        "eventTrackers": {},
+        "firstPartyReportingJSFileURL": "",
+        "instrPixelUrl": None
+      },
+      "clickTrackingUrl": "",
+      "creativeId": str(int(random.random()*500000000000)),
+      "imageUrl": "https://m.media-amazon.com/images/I/81bXhP91J1L.jpg",
+      "impressionUrl": "",
+      "instrPixelUrl": None,
+      "intentUrl": "amzn://com.amazon.tv.subscription/offer?refMarker=ktb_3p_nog_c&benefitTypeId=hbomaxus&sourceTag=LAUNCHER_MOVIES_FR_3",
+      "logoUrl": "https://m.media-amazon.com/images/I/31PcgTO-P1L.png",
+      "placementName": ad["placementName"],
+      "ttlMinutes": "1",
+      "type": "FeaturedRotatorAd",
+      "videoUrl": "https://d24hosivsxf1sb.cloudfront.net/transcode/47883cee-c1a7-4aba-88f8-3d475d8580a2/video%2Fmp4%2Fvideo_mp4_2000.mp4"
+    }
 
 
 def response(flow: http.HTTPFlow) -> None:
@@ -176,18 +204,17 @@ def response(flow: http.HTTPFlow) -> None:
             if strat == "PreloadRefreshStrategy":
                 for ad in jso["ads"]:
                     ads.append(   getNulledAd(ad)     )
-            elif strat == "ReactiveRefreshStrategy":
+            else:
                 for ad in jso["ads"]:
                     if ad["placementName"] in ["Launcher.Home.Default.Rotational", "Gordon.Live.Default.Inline"]:
                         data = None
                         if ad["placementName"] == "Launcher.Home.Default.Rotational":
                             data = titleAd(ad,
-                                head="Owo", 
-                                headline = "Things are happening",
+                                head="Rarararaar", 
+                                headline = "It is happening",
                                 desc = "The Revolution has begun!!!!",
                                 url = "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-                                main_img="https://raw.githubusercontent.com/HeronErin/FuckAmz/main/test_imgs/inline_ad.jpg", 
-                                img="https://raw.githubusercontent.com/HeronErin/FuckAmz/main/test_imgs/inine_background.jpg")
+                                main_img="https://raw.githubusercontent.com/HeronErin/FuckAmz/main/test_imgs/title_ad_rot.jpg")
                         else:
                             data = inline(ad, 
                                 head="Owo", 
@@ -199,10 +226,7 @@ def response(flow: http.HTTPFlow) -> None:
                         ads.append(data)
                     else:
                         ads.append(getNulledAd(ad))
-            else:
-                f = open("errors.log", "a")
-                f.write(f"Found a request with unknown strat {strat}\n")
-                f.close()
+
             flow.response.text = json.dumps({"ads": ads})
 
         elif "ktpx.amazon.com/mb/data" in flow.request.url:
