@@ -9,40 +9,45 @@
 import random, string, time, json
 
 TARGET_HOME_ROTS = 9
-TARGET_HOME_TILES = 5
+TARGET_HOME_TILES = 10
 TARGET_GORDEN_LIVE = 1
 TTL = 235
 
 def HandleAviary(ads, flow):
-    alreadyRUn = []
-    canReturn = [ad["placementName"] for ad in ads]
     retAds = []
-    NOW = int(time.time()) # Make sure time is always the same
 
     try:
         for ad in ads:
 
-            if "Launcher.Home.FR.1" == ad["placementName"] and not ad["placementName"] in alreadyRUn:
+            if "Launcher.Home.FR.1" == ad["placementName"]:
+                retAds.append(featuredRotatorAd(
+                    {"adRole": "mainAd", "placementName":"Launcher.Home.FR.1"},
+                     main_img="https://raw.githubusercontent.com/HeronErin/FuckAmz/main/test_imgs/featured_rot_ad.jpg", 
+                     url="https://www.youtube.com/watch?v=QQu1_bf1Bdo"
+                    ))
 
-                for _ in range(1):
-                    retAds.append(featuredRotatorAd(
-                        {"adRole": "mainAd", "placementName":"Launcher.Home.FR.1"},
-                         main_img="https://raw.githubusercontent.com/HeronErin/FuckAmz/main/test_imgs/featured_rot_ad.jpg", 
-                         url="https://www.youtube.com/watch?v=QQu1_bf1Bdo"
+
+            elif "Launcher.Home.Default.Rotational" == ad["placementName"]:
+                for t in range(TARGET_HOME_TILES):
+                    retAds.append(tileAd(
+                        {"adRole": "mainAd", "placementName":"Launcher.Home.Default.Rotational"},
+                        main_img="https://raw.githubusercontent.com/HeronErin/FuckAmz/main/test_imgs/title_ad_rot.jpg",
+                        sub_img=None,
+                        head="Fuck all yall", 
+                        desc="This plays a good video", 
+                        title="Owo", 
+                        url="https://www.youtube.com/watch?v=QQu1_bf1Bdo", tile_pos=t+1
                         ))
-
-
-            # elif "Launcher.Home.Default.Rotational" == ad["placementName"] and not ad["placementName"] in alreadyRUn:
-            #     for t in range(4):
-            #         retAds.append(tileAd(
-            #             {"adRole": "mainAd", "placementName":"Launcher.Home.Default.Rotational"},
-            #             main_img="https://raw.githubusercontent.com/HeronErin/FuckAmz/main/test_imgs/title_ad_rot.jpg",
-            #             sub_img=None,
-            #             head="Fuck your mother", 
-            #             desc="This plays a good video", 
-            #             title="Owo", 
-            #             url="https://www.youtube.com/watch?v=QQu1_bf1Bdo", tile_pos=t+1
-            #             ))
+                for t in range(TARGET_HOME_TILES):
+                    retAds.append(tileAd(
+                        {"adRole": "mainAd", "placementName":"Launcher.Home.Default.Rotational"},
+                        main_img="https://raw.githubusercontent.com/HeronErin/FuckAmz/main/test_imgs/title_ad_rot.jpg",
+                        sub_img=None,
+                        head="Fuck all yall 2x", 
+                        desc="This plays a good video", 
+                        title="Owo", 
+                        url="https://www.youtube.com/watch?v=QQu1_bf1Bdo", tile_pos=t+1
+                        ))
                 # retAds.append(inlineAd(
                 #     {"adRole": "mainAd", "placementName":"Launcher.Home.Default.Rotational"},
                 #     head="This is my firestick now",
@@ -52,41 +57,42 @@ def HandleAviary(ads, flow):
                 #     headline="Hacking is fun",
                 #     img=None
                 #     ))
-            # elif "Gordon.Live.Default.Inline" == ad["placementName"] and not ad["placementName"] in alreadyRUn:
-            #     retAds.append(inlineAd(
-            #         {"adRole": "mainAd", "placementName":"Gordon.Live.Default.Inline"},
-            #         head="This is my firestick now LIVE",
-            #         main_img="https://raw.githubusercontent.com/HeronErin/FuckAmz/main/test_imgs/inline_ad.jpg",
-            #         url="https://www.youtube.com/watch?v=QQu1_bf1Bdo",
-            #         desc="This is my right as an american", 
-            #         headline="Hacking is fun LIVE",
-            #         img=None
-            #         ))
-            # elif "EPG.First" == ad["placementName"] and not ad["placementName"] in alreadyRUn:
-            #     retAds.append(inlineAd(
-            #         {"adRole": "mainAd", "placementName":"EPG.First"},
-            #         head="This is my firestick now EPG.First",
-            #         main_img="https://raw.githubusercontent.com/HeronErin/FuckAmz/main/test_imgs/inline_ad.jpg",
-            #         url="https://www.youtube.com/watch?v=QQu1_bf1Bdo",
-            #         desc="This is my right as an american", 
-            #         headline="Hacking is fun EPG.First",
-            #         img=None
-            #         ))
+            elif "Gordon.Live.Default.Inline" == ad["placementName"]:
+                retAds.append(inlineAd(
+                    {"adRole": "mainAd", "placementName":"Gordon.Live.Default.Inline"},
+                    head="This is my firestick now LIVE",
+                    main_img="https://raw.githubusercontent.com/HeronErin/FuckAmz/main/test_imgs/inline_ad.jpg",
+                    url="https://www.youtube.com/watch?v=QQu1_bf1Bdo",
+                    desc="This is my right as an american", 
+                    headline="Hacking is fun LIVE",
+                    img=None
+                    ))
+            elif "EPG.First" == ad["placementName"]:
+                retAds.append(inlineAd(
+                    {"adRole": "mainAd", "placementName":"EPG.First"},
+                    head="This is my firestick now EPG.First",
+                    main_img="https://raw.githubusercontent.com/HeronErin/FuckAmz/main/test_imgs/inline_ad.jpg",
+                    url="https://www.youtube.com/watch?v=QQu1_bf1Bdo",
+                    desc="This is my right as an american", 
+                    headline="Hacking is fun EPG.First",
+                    img=None
+                    ))
+            elif "App.TV.Featured.Default.Rotational" == ad["placementName"]:
+                for t in range(TARGET_HOME_TILES):
+                    retAds.append(tileAd(
+                        {"adRole": "mainAd", "placementName":"App.TV.Featured.Default.Rotational"},
+                        main_img="https://raw.githubusercontent.com/HeronErin/FuckAmz/main/test_imgs/title_ad_rot.jpg",
+                        sub_img=None,
+                        head="Fuck all yall App.TV", 
+                        desc="This plays a good video", 
+                        title="Owo App.TV", 
+                        url="https://www.youtube.com/watch?v=QQu1_bf1Bdo", tile_pos=t
+                        ))
+
             else:
                 retAds.append(getNulledAd(ad))
-            alreadyRUn.append(ad["placementName"])
-            # if "App.TV.Featured.Default.Rotational" in canReturn:
-            #     for t in range(TARGET_HOME_TILES):
-            #         retAds.append(tileAd(
-            #             {"adRole": "mainAd", "placementName":"App.TV.Featured.Default.Rotational"},
-            #             main_img="https://raw.githubusercontent.com/HeronErin/FuckAmz/main/test_imgs/title_ad_rot.jpg",
-            #             sub_img=None,
-            #             head="Fuck your mother App.TV", 
-            #             desc="This plays a good video", 
-            #             title="Owo App.TV", 
-            #             url="https://www.youtube.com/watch?v=QQu1_bf1Bdo", tile_pos=t
-            #             ))
-
+            
+        
 
     finally:
         flow.response.text = json.dumps({"ads": retAds})

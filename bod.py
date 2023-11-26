@@ -44,6 +44,25 @@ while True:
 	l3l = len(l3:=json.loads(f.readline())["ads"])
 	if l2l < l3l:
 		print(l3)
+	dir = os.path.join(BASE, str(i).zfill(4)+f"_{l2l}_{l3l}_{line1}" )
+	os.mkdir(dir)
+	f2 = open(os.path.join(dir, "req"), "w")
+	f2.write(json.dumps(l2, sort_keys=True, indent=4))
+	f2.close()
+
+	f2 = open(os.path.join(dir, "res"), "w")
+	f2.write(json.dumps(l3, sort_keys=True, indent=4))
+	f2.close()
+
+	for i2, ad in enumerate(l3):
+		if ad['type'] is None: continue
+		dir2 = os.path.join(dir, ad["placementName"])
+		if not os.path.exists(dir2):
+			os.mkdir(dir2)
+		f2 = open(os.path.join(dir2, str(i2)+f"_{ad['type']}_{len(json.dumps(ad))}"), "w")
+		f2.write(json.dumps(ad, sort_keys=True, indent=4))
+		f2.close()
+
 
 	i+=1
 
