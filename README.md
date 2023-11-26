@@ -22,7 +22,7 @@ Summery of installation:
 
 2. Connect to your firestick with adb (this will be usefull for debuging later)
 ```bash
-	adb connect 192.168.1.### Replace with your firesticks ip
+	adb connect 192.168.1.### # Replace with your firestick's ip
 ```
 
 3. Add the mitmproxy Certificate Authority to your firestick's download folder
@@ -38,4 +38,13 @@ adb shell am start -a "android.intent.action.VIEW" -d "file:///storage/emulated/
 5. Access the hidden debug menu to set up the network proxy with **YOUR** PC's ip
 ```bash
  adb shell am start com.amazon.ssm/com.amazon.ssm.ControlPanel
+```
+
+6. Run mitmproxy with this program
+```bash
+mitmdump -s xprox.py
+# OR
+mitmproxy -s xprox.py
+# OR
+mitmweb -s xprox.py
 ```
