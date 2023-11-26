@@ -22,7 +22,7 @@ Summery of installation:
 
 2. Connect to your firestick with adb (this will be usefull for debuging later)
 ```bash
-	adb connect 192.168.1.### # Replace with your firestick's ip
+	adb connect 192.168.1.###  Replace with your firestick's ip
 ```
 
 3. Add the mitmproxy Certificate Authority to your firestick's download folder
