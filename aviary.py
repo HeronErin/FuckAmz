@@ -11,7 +11,7 @@ import random, string, time, json
 TARGET_HOME_ROTS = 9
 TARGET_HOME_TILES = 10
 TARGET_GORDEN_LIVE = 1
-TTL = 235
+TTL = 15
 
 def HandleAviary(ads, flow):
     retAds = []
@@ -23,7 +23,8 @@ def HandleAviary(ads, flow):
                 retAds.append(featuredRotatorAd(
                     {"adRole": "mainAd", "placementName":"Launcher.Home.FR.1"},
                      main_img="https://raw.githubusercontent.com/HeronErin/FuckAmz/main/test_imgs/featured_rot_ad.jpg", 
-                     url="https://www.youtube.com/watch?v=QQu1_bf1Bdo"
+                     url="https://www.youtube.com/watch?v=QQu1_bf1Bdo",
+                     logo_img="https://raw.githubusercontent.com/HeronErin/FuckAmz/main/test_imgs/featured_rot_logo.png"
                     ))
 
 
@@ -32,20 +33,10 @@ def HandleAviary(ads, flow):
                     retAds.append(tileAd(
                         {"adRole": "mainAd", "placementName":"Launcher.Home.Default.Rotational"},
                         main_img="https://raw.githubusercontent.com/HeronErin/FuckAmz/main/test_imgs/title_ad_rot.jpg",
-                        sub_img=None,
+                        sub_img="https://raw.githubusercontent.com/HeronErin/FuckAmz/main/test_imgs/featured_rot_ad.jpg",
                         head="Fuck all yall", 
-                        desc="This plays a good video", 
-                        title="Owo", 
-                        url="https://www.youtube.com/watch?v=QQu1_bf1Bdo", tile_pos=t+1
-                        ))
-                for t in range(TARGET_HOME_TILES):
-                    retAds.append(tileAd(
-                        {"adRole": "mainAd", "placementName":"Launcher.Home.Default.Rotational"},
-                        main_img="https://raw.githubusercontent.com/HeronErin/FuckAmz/main/test_imgs/title_ad_rot.jpg",
-                        sub_img=None,
-                        head="Fuck all yall 2x", 
-                        desc="This plays a good video", 
-                        title="Owo", 
+                        desc="This plays a good video. If connected to the youtube api this can be anything!!!", 
+                        title="Eat the rich! Fuck amazon", 
                         url="https://www.youtube.com/watch?v=QQu1_bf1Bdo", tile_pos=t+1
                         ))
                 # retAds.append(inlineAd(
@@ -65,7 +56,7 @@ def HandleAviary(ads, flow):
                     url="https://www.youtube.com/watch?v=QQu1_bf1Bdo",
                     desc="This is my right as an american", 
                     headline="Hacking is fun LIVE",
-                    img=None
+                    img="https://raw.githubusercontent.com/HeronErin/FuckAmz/main/test_imgs/featured_rot_ad.jpg"
                     ))
             elif "EPG.First" == ad["placementName"]:
                 retAds.append(inlineAd(
@@ -75,7 +66,7 @@ def HandleAviary(ads, flow):
                     url="https://www.youtube.com/watch?v=QQu1_bf1Bdo",
                     desc="This is my right as an american", 
                     headline="Hacking is fun EPG.First",
-                    img=None
+                    img="https://raw.githubusercontent.com/HeronErin/FuckAmz/main/test_imgs/featured_rot_ad.jpg"
                     ))
             elif "App.TV.Featured.Default.Rotational" == ad["placementName"]:
                 for t in range(TARGET_HOME_TILES):
